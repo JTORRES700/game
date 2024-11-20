@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClickMe Challenge!</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f7f7;
+            color: #333;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            color: #0077cc;
+        }
+        #gameArea {
+            margin-top: 30px;
+        }
+        #clickButton {
+            padding: 20px;
+            font-size: 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        #clickButton:hover {
+            background-color: #45a049;
+        }
+        #timer {
+            font-size: 30px;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        #score {
+            font-size: 24px;
+            margin-top: 10px;
+        }
+        #message {
+            margin-top: 20px;
+            font-size: 20px;
+            color: #ff6347;
+        }
+        footer {
+            margin-top: 40px;
+            font-size: 14px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>ClickMe Challenge!</h1>
+    <div id="gameArea">
+        <button id="clickButton" onclick="incrementScore()">Click Me!</button>
+        <p id="timer">Time Remaining: <span id="timeLeft">10</span> seconds</p>
+        <p id="score">Score: <span id="scoreCount">0</span></p>
+        <p id="message"></p>
+    </div>
+
+    <footer>
+        <p>Created by Jason T. and Jameel G.</p>
+        <p>Warning: You might get addicted to clicking.</p>
+    </footer>
+
+    <script>
+        let timeLeft = 10;
+        let score = 0;
+        let gameInterval;
+        let timerInterval;
+
+        function startGame() {
+            score = 0;
+            document.getElementById("scoreCount").textContent = score;
+            document.getElementById("message").textContent = "";
+            document.getElementById("clickButton").disabled = false;
+            startTimer();
+        }
+
+        function startTimer() {
+            gameInterval = setInterval(() => {
+                if (timeLeft > 0) {
+                    timeLeft--;
+                    document.getElementById("timeLeft").textContent = timeLeft;
+                } else {
+                    clearInterval(gameInterval);
+                    endGame();
+                }
+            }, 1000);
+        }
+
+        function incrementScore() {
+            score++;
+            document.getElementById("scoreCount").textContent = score;
+            showMotivationalMessage();
+        }
+
+        function showMotivationalMessage() {
+            const messages = [
+                "You're clicking like a pro!",
+                "Is this the best clicker ever? We think so!",
+                "Your finger must be on fire from all that clicking!",
+                "Keep going! Only the best clickers make it to the top!",
+                "Did you know clicking burns calories? Keep clicking!"
+            ];
+            const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+            document.getElementById("message").textContent = randomMessage;
+        }
+
+        function endGame() {
+            document.getElementById("clickButton").disabled = true;
+            const endMessages = [
+                `Time's up! Your final score is ${score}. Looks like you need more coffee!`,
+                `Great job! Your final score is ${score}. The click legend has been born.`,
+                `And that's it! Your score is ${score}. Remember, clicking is a sport.`,
+                `Game over! You scored ${score}. Now go take a victory nap.`,
+                `Finished! Your final score is ${score}. That was click-tastic!`
+            ];
+            const randomEndMessage = endMessages[Math.floor(Math.random() * endMessages.length)];
+            document.getElementById("message").textContent = randomEndMessage;
+        }
+
+        // Start the game when the page loads
+        window.onload = startGame;
+    </script>
+
+</body>
+</html>
